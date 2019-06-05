@@ -215,6 +215,21 @@ RUN;
 
 %MEND;
 
+data _null_;
+set TFM.TABLAS_MICRODATOS;
+call execute( '%importar(' || TABLAS || ')');
+RUN;
+
+DATA TFM.TABLAS_MICRODATOS;
+LENGTH TABLAS $30;
+INPUT TABLAS $;
+CARDS;
+Tabla_accvict_24h_2008
+Tabla_accvict_24h_2009
+Tabla_accvict_24h_2010
+;
+RUN;
+
 
 %macro ACCVICT(TABLAS);
 
@@ -422,6 +437,11 @@ RUN;
 
 %mend;
 
+data _null_;
+set TFM.TABLAS_MICRODATOS;
+call execute( '%importar(' || TABLAS || ')');
+RUN;
+
 
 DATA TFM.TABLAS_ACCVICT_COMPLETO_2;
 SET tfm.Tabla_accvict_24h_2008_2 (keep=ID_ACCIDENTE MES DIASEMANA PROVINCIA 
@@ -467,4 +487,44 @@ TIPO_ACCIDENTE)
 ;
 RUN;
 
+
+/*Podemos realizar un tratamiento distinto a renombrar variables. Podemos cruzar las tablas de microdatos de la DGT
+con tablas que contengan las equivalencias de los valores numéricos de las variables*/
+
+proc sql;
+create table tfm.TABLA_VEHIC_24H_2008_3 as
+select A.*, B.TIPO_VEHICULO AS TIPO_VEHICULO_2
+FROM TFM.Tabla_vehic_24h_2008_2 AS A LEFT JOIN TFM.TIPO_VEHICULO as b
+ON A.TIPO_VEHICULO = B.Variable;
+proc sql;
+create table tfm.TABLA_VEHIC_24H_2008_3 as
+select A.*, B.ESTADO_VEHICULO AS ESTADO_VEHICULO_2
+FROM TFM.Tabla_vehic_24h_2008_3 AS A LEFT JOIN TFM.ESTADO_VEHICULO as b
+ON A.ESTADO_VEHICULO = B.Variable;
+
+
+
+proc sql;
+create table tfm.TABLA_VEHIC_24H_2009_3 as
+select A.*, B.TIPO_VEHICULO AS TIPO_VEHICULO_2
+FROM TFM.Tabla_vehic_24h_2009_2 AS A LEFT JOIN TFM.TIPO_VEHICULO as b
+ON A.TIPO_VEHICULO = B.Variable;
+proc sql;
+create table tfm.TABLA_VEHIC_24H_2009_3 as
+select A.*, B.ESTADO_VEHICULO AS ESTADO_VEHICULO_2
+FROM TFM.Tabla_vehic_24h_2009_3 AS A LEFT JOIN TFM.ESTADO_VEHICULO as b
+ON A.ESTADO_VEHICULO = B.Variable;
+
+
+
+proc sql;
+create table tfm.TABLA_VEHIC_24H_2010_3 as
+select A.*, B.TIPO_VEHICULO AS TIPO_VEHICULO_2
+FROM TFM.Tabla_vehic_24h_2010_2 AS A LEFT JOIN TFM.TIPO_VEHICULO as b
+ON A.TIPO_VEHICULO = B.Variable;
+proc sql;
+create table tfm.TABLA_VEHIC_24H_2010_3 as
+select A.*, B.ESTADO_VEHICULO AS ESTADO_VEHICULO_2
+FROM TFM.Tabla_vehic_24h_2010_3 AS A LEFT JOIN TFM.ESTADO_VEHICULO as b
+ON A.ESTADO_VEHICULO = B.Variable;
 
