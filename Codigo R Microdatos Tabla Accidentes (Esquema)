@@ -1,0 +1,13 @@
+# Importación de datos:
+datos_acc_2008 = read.table(file.choose("C:/Users/HP/Documents/TFM/Trabajo/ESPAÑA (dgt)/TABLA_ACCVICT_24H_2008.csv"), skip=0, header = TRUE, sep = ';')
+
+# Sustitución de valores:
+install.packages("dplyr")
+library(dplyr)
+datos_acc_2008 <- datos_acc_2008 %>% mutate(DIASEMANA = replace(DIASEMANA, DIASEMANA == "5", "Viernes"))
+datos_acc_2008 <- datos_acc_2008 %>% mutate(PROVINCIA = replace(PROVINCIA, PROVINCIA == "48", "Bizkaia"))
+datos_acc_2008 <- datos_acc_2008 %>% mutate(TIPO_ACCIDENTE = replace(TIPO_ACCIDENTE, TIPO_ACCIDENTE == "41", "Vuelco en la calzada"))
+datos_acc_2008 <- datos_acc_2008 %>% mutate(FACTORES_ATMOSFERICOS = replace(FACTORES_ATMOSFERICOS, FACTORES_ATMOSFERICOS == "2", "Niebla intensa"))
+
+# Unión de tablas:
+tabla_accidentes_completa = rbind(datos_acc_2008, datos_acc_2009, datos_acc_2010, datos_acc_2011, datos_acc_2012, datos_acc_2013, datos_acc_2014, datos_acc_2015)
