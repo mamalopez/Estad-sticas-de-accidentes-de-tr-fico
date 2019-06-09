@@ -10,6 +10,7 @@ madrid_acc_2016 = read_excel("C:/Users/HP/Documents/TFM/Trabajo/MADRID/2016_Acci
 madrid_acc_2017 = read_excel("C:/Users/HP/Documents/TFM/Trabajo/MADRID/2017_Accidentalidad.xlsx")
 madrid_acc_2018 = read_excel("C:/Users/HP/Documents/TFM/Trabajo/MADRID/2018_Accidentalidad.xlsx")
 
+# Renombramos variables para que se puedan unir en una sola tabla
 names (madrid_acc_2010)[20] = "Numero_victimas"
 names (madrid_acc_2011)[20] = "Numero_victimas"
 names (madrid_acc_2012)[20] = "Numero_victimas"
@@ -20,10 +21,11 @@ names (madrid_acc_2016)[20] = "Numero_victimas"
 names (madrid_acc_2017)[20] = "Numero_victimas"
 names (madrid_acc_2018)[20] = "Numero_victimas"
 
-View (tabla_accidentes_completa)
 
-# Renombramos variables para que se puedan unir en una sola tabla
+# Unimos variables 
 madrid_accidentes_completo = rbind(madrid_acc_2010, madrid_acc_2011, madrid_acc_2012, madrid_acc_2013, madrid_acc_2014, madrid_acc_2015, madrid_acc_2016, madrid_acc_2017, madrid_acc_2018)
+
+View (tabla_accidentes_completa)
 
 # row.mames=F -> para no guardar el nombre de las filas
 # sep=";" -> selecciono el caracter ";" como separador
